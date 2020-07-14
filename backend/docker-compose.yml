@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    database_mysql:
+        image: mysql:5.7.22
+        environment:
+            MYSQL_ROOT_USER: ${process.env.DB_USER}
+            MYSQL_ROOT_PASSWORD: ${process.env.DB_PASSWORD}
+            MYSQL_DATABASE: ${process.env.DATABASE}
+        ports:
+            - ${process.env.DB_PORT}:${process.env.DB_PORT}
+        volumes:
+            - .:/var/lib/mysql
+        networks:
+            - mysql-compose-network
+
+networks:
+    mysql-compose-network:
+        driver: bridge

@@ -3,6 +3,7 @@ const express = require('express')
 const morgam = require('morgan')
 const server = express()
 const route = require('./routes/routes')
+require('./database')
 
 server.use(express.urlencoded)
 server.use(express.json())
