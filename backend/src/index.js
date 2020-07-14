@@ -1,13 +1,13 @@
 require('dotenv').config()
 const express = require('express')
-const morgam = require('morgan')
+const morgan = require('morgan')
 const server = express()
 const route = require('./routes/routes')
 require('./database')
 
-server.use(express.urlencoded)
+server.use(express.urlencoded({ extended: true }))
 server.use(express.json())
-server.use(morgam('dev'))
+server.use(morgan('dev'))
 server.use(route)
 
 if (process.env.PORT || 3000) {
