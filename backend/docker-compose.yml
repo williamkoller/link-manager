@@ -1,16 +1,25 @@
 version: '3'
 
 services:
-    database_mysql:
-        image: mysql:5.7.22
+    db:
+        image: mysql:5.7
+        restart: always
+        command: --disable-partition-engine-check
         environment:
-            MYSQL_ROOT_USER: ${process.env.DB_USER}
-            MYSQL_ROOT_PASSWORD: ${process.env.DB_PASSWORD}
-            MYSQL_DATABASE: ${process.env.DATABASE}
+            MYSQL_ROOT_USER: ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DATABASE}
         ports:
-            - ${process.env.DB_PORT}:${process.env.DB_PORT}
+            - '3306:3306'
         volumes:
-            - .:/var/lib/mysql
+            - ./db:/var/lib/mysql
+        networks:
+            - mysql-compose-network
+
+    adminer:
+        image: adminer
+        ports:
+            - 8080:8080
         networks:
             - mysql-compose-network
 
