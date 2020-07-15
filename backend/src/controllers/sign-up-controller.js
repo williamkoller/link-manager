@@ -12,7 +12,6 @@ module.exports = {
 						user,
 					})
 				)
-				setTimeout(() => {}, 2000)
 			} catch (err) {
 				reject(
 					response.status(400).json({
