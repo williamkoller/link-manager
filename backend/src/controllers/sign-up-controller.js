@@ -3,21 +3,19 @@ module.exports = {
 	store(request, response) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const { email, password } = request.body
-				const user = await Account.create({ email, password })
+				const user = await Account.findOrCreate({
+					where: { email: request.body.email },
+					defaults: request.body.email,
+				})
 
-				resolve(
+				return resolve(
 					response.status(200).json({
-						message: 'Usuário cadastrado com sucesso',
+						message: 'Usuário cadastrado',
 						user,
 					})
 				)
 			} catch (err) {
-				reject(
-					response.status(400).json({
-						message: 'Não foi possivel realizar seu cadastro',
-					})
-				)
+				reject(err)
 			}
 		})
 	},
