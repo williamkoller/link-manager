@@ -4,7 +4,7 @@
 	"description": "Links Manager ",
 	"main": "index.js",
 	"scripts": {
-		"dev": "nodemon --trace-warnings src/index.js"
+		"start": "nodemon --trace-warnings src/index.js"
 	},
 	"author": "William Koller",
 	"license": "MIT",

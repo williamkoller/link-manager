@@ -1,0 +1,33 @@
+version: '2.3'
+services:
+    mysqldb:
+        image: mysql:5.6
+        restart: always
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        environment:
+            MYSQL_ROOT_USER: ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DATABASE}
+            MYSQL_HOST: ${DB_HOST}
+        volumes:
+            - mysql-data:/etc/mysql/conf.d
+        networks:
+            - api
+    link_manager:
+        build: .
+        restart: always
+        ports:
+            - ${PORT}:${PORT}
+        command: bash -c "npm start"
+        depends_on:
+            - mysqldb
+        networks:
+            - api
+
+volumes:
+    mysql-data:
+        driver: local
+
+networks:
+    api:
