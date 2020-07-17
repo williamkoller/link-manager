@@ -5,8 +5,8 @@ const morgan = require('morgan')
 const server = express()
 const authController = require('./controllers/auth')
 
-server.use(express.urlencoded({ extended: true }))
 server.use(express.json())
+server.use(express.urlencoded({ extended: false }))
 server.use(morgan('dev'))
 server.use('/auth', authController)
 
