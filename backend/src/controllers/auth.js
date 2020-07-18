@@ -30,11 +30,4 @@ router.post('/sign-up', accountSignUp, async (request, response) => {
 	return response.jsonOK(newAccount, getMessage('account.signup.success'))
 })
 
-router.get('/users', async (request, response) => {
-	const users = await Account.findAll()
-	if (users == '' && users == null) {
-		return response.json('Users not found')
-	}
-	return response.json(users)
-})
 module.exports = router
