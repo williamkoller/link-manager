@@ -13,11 +13,11 @@ server.use(morgan('dev'))
 server.use('/auth', authController)
 
 db.sequelize.sync().then(() => {
-	if (process.env.PORT || 3000) {
+	if (process.env.PORT || 3001) {
 		server.listen(process.env.PORT, () => {
 			console.log(
-				`Lidtening on http://localhost:${
-					process.env.PORT
+				`Listening on http://localhost:${
+				process.env.PORT
 				} - on date the ${new Date()}`
 			)
 		})
