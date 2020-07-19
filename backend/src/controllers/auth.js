@@ -30,7 +30,6 @@ router.post('/sign-up', accountSignUp, async (request, response) => {
 				password: hash,
 
 			})
-			console.log(newAccount)
 			resolve(response.jsonOK(newAccount, getMessage('account.signup.success')))
 		} catch (err) {
 			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
