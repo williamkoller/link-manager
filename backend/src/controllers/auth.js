@@ -24,7 +24,7 @@ router.post('/sign-up', accountSignUp, async (request, response) => {
 			}
 
 			const hash = bcrypt.hashSync(password, salt)
-			
+
 			const newAccount = await Account.create({
 				email,
 				password: hash,
@@ -50,7 +50,7 @@ router.delete('/users/:userId', (request, response) => {
 					id: userId
 				}
 			})
-			
+
 			if (!account) {
 				reject(response.jsonBadRequest(null, getMessage('account.signup.users.not_found')))
 			}
@@ -71,7 +71,6 @@ router.get('/users', (request, response) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const users = await Account.findAll()
-			console.log(users)
 			resolve(response.jsonOK(users, getMessage('response.json_ok')))
 		} catch (err) {
 			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
