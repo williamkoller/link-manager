@@ -50,7 +50,7 @@ router.delete('/users/:userId', (request, response) => {
 					id: userId
 				}
 			})
-			console.log(account, userId)
+			
 			if (!account) {
 				reject(response.jsonBadRequest(null, getMessage('account.signup.users.not_found')))
 			}
