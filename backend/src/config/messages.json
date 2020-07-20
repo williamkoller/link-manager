@@ -4,6 +4,7 @@
     "response.json_unauthorized": "Requisição não autorizada.",
     "response.json_not_found": "Não encontrado.",
     "response.json_server_error": "Erro no servidor.",
+
     "account.signup.email_exists": "E-mail já cadastrado.",
     "account.signup.success": "Cadastro efetuado com sucesso.",
     "account.signup.email.string.empty": "E-mail é obrigatório.",
@@ -12,5 +13,13 @@
     "account.signup.password.string.empty": "Senha é obrigatório.",
     "account.signup.password.string.pattern.base": "Senha deve conter entre 3 a 30 caracteres e incluir letras e números",
     "account.signup.users.not_found": "Usuário não encontrado",
-    "account.signup.users.delete": "Usuário deletado com sucesso"
+    "account.signup.users.delete": "Usuário deletado com sucesso",
+    
+    "account.signin.invalid": "Credentiais inválidas.",
+    "account.signin.success": "Login efetuado com sucesso.",
+    "account.signin.email.string.empty": "E-mail é obrigatório.",
+    "account.signin.email.string.email": "Não é um e-mail é válido.",
+    "account.signin.password_confirmation.any.required": "Confirmação de senha é obrigatório.",
+    "account.signin.password.string.empty": "Senha é obrigatório.",
+    "account.signin.password.string.pattern.base": "Senha deve conter entre 3 a 30 caracteres e incluir letras e números"
 }
