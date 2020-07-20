@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({ path: './.env' })
 const express = require('express')
 const db = require('./models')
 const morgan = require('morgan')
@@ -17,7 +17,7 @@ db.sequelize.sync().then(() => {
 		server.listen(process.env.PORT, () => {
 			console.log(
 				`Listening on http://localhost:${
-				process.env.PORT
+					process.env.PORT
 				} - on date the ${new Date()}`
 			)
 		})
