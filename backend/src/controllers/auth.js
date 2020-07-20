@@ -1,43 +1,55 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
-const { Account } = require('../models')
-const { accountSignUp } = require('../validators/account')
-const { getMessage } = require('../helpers/validator')
 const salt = 10
+const { Account } = require('../models')
+const { accountSignUp, accountSignIn } = require('../validators/account')
+const { getMessage } = require('../helpers/validator')
+const { generateJwt, generateRefreshJwt } = require('../helpers/jwt')
 
-router.get('/sign-in', (request, response) => {
-	return response.jsonOK(null)
-})
-
-router.post('/sign-up', accountSignUp, async (request, response) => {
+router.post('/sign-in', accountSignIn, (request, response) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const { email, password } = request.body
-
+			const { email, password, } = request.body
 			const account = await Account.findOne({ where: { email } })
-			if (account) {
-				return response.jsonBadRequest(
-					null,
-					getMessage('account.signup.email_exists')
-				)
-			}
 
-			const hash = bcrypt.hashSync(password, salt)
 
-			const newAccount = await Account.create({
-				email,
-				password: hash,
+			const macth = account ? bcrypt.compareSync(password, account.password) : null
 
-			})
-			resolve(response.jsonOK(newAccount, getMessage('account.signup.success')))
+			if (!macth) return reject(response.jsonBadRequest(null, getMessage('account.signin.invalid')))
+
+			const token = generateJwt({ id: account.id })
+			const refreshToken = generateRefreshJwt({ id: account.id })
+			resolve(response.jsonOK(account, getMessage('account.signin.success'), { token, refreshToken }))
+
 		} catch (err) {
-			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
+			reject(response.jsonBadRequest(err, 'response.json_bad_request'))
 		}
 	})
 
 
 
+})
+
+router.post('/sign-up', accountSignUp, (request, response) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			const { email, password } = request.body
+
+			const account = await Account.findOne({ where: { email } })
+			if (account) return response.jsonBadRequest(null, getMessage('account.signup.email_exists'))
+
+			const hash = bcrypt.hashSync(password, salt)
+
+			const newAccount = await Account.create({ email, password: hash })
+
+			const token = generateJwt({ id: newAccount.id })
+			const refreshToken = generateRefreshJwt({ id: newAccount.id })
+			resolve(response.jsonOK(newAccount, getMessage('account.signup.success'), { token, refreshToken, }))
+		} catch (err) {
+			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
+		}
+	})
 })
 
 router.delete('/users/:userId', (request, response) => {
@@ -46,22 +58,34 @@ router.delete('/users/:userId', (request, response) => {
 			const { userId } = request.params
 			const account = await Account.findOne({
 				where: {
-					id: userId
-				}
+					id: userId,
+				},
 			})
 
 			if (!account) {
-				reject(response.jsonBadRequest(null, getMessage('account.signup.users.not_found')))
+				reject(
+					response.jsonBadRequest(
+						null,
+						getMessage('account.signup.users.not_found')
+					)
+				)
 			}
 			await Account.destroy({
 				where: {
-					id: userId
-				}
+					id: userId,
+				},
 			})
-			resolve(response.jsonOK(null, getMessage('account.signup.users.delete')))
+			resolve(
+				response.jsonOK(null, getMessage('account.signup.users.delete'))
+			)
 		} catch (err) {
 			console.error(err)
-			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
+			reject(
+				response.jsonBadRequest(
+					err,
+					getMessage('response.json_bad_request')
+				)
+			)
 		}
 	})
 })
@@ -72,10 +96,14 @@ router.get('/users', (request, response) => {
 			const users = await Account.findAll()
 			resolve(response.jsonOK(users, getMessage('response.json_ok')))
 		} catch (err) {
-			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
+			reject(
+				response.jsonBadRequest(
+					err,
+					getMessage('response.json_bad_request')
+				)
+			)
 		}
 	})
-
 })
 
 module.exports = router
