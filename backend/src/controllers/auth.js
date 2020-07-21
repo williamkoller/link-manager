@@ -22,8 +22,8 @@ router.post('/sign-in', accountSignIn, (request, response) => {
 			const refreshToken = generateRefreshJwt({ id: account.id })
 			resolve(response.jsonOK(account, getMessage('account.signin.success'), { token, refreshToken }))
 
-		} catch (err) {
-			reject(response.jsonBadRequest(err, 'response.json_bad_request'))
+		} catch (error) {
+			reject(error, response.jsonBadRequest(null, getMessage('response.json_bad_request')))
 		}
 	})
 
@@ -46,8 +46,8 @@ router.post('/sign-up', accountSignUp, (request, response) => {
 			const token = generateJwt({ id: newAccount.id })
 			const refreshToken = generateRefreshJwt({ id: newAccount.id })
 			resolve(response.jsonOK(newAccount, getMessage('account.signup.success'), { token, refreshToken, }))
-		} catch (err) {
-			reject(response.jsonBadRequest(err, getMessage('response.json_bad_request')))
+		} catch (error) {
+			reject(error, response.jsonBadRequest(null, getMessage('response.json_bad_request')))
 		}
 	})
 })
@@ -62,14 +62,9 @@ router.delete('/users/:userId', (request, response) => {
 				},
 			})
 
-			if (!account) {
-				reject(
-					response.jsonBadRequest(
-						null,
-						getMessage('account.signup.users.not_found')
-					)
-				)
-			}
+			if (!account) return response.jsonBadRequest(null, getMessage('account.signup.users.not_found'))
+
+
 			await Account.destroy({
 				where: {
 					id: userId,
@@ -78,11 +73,11 @@ router.delete('/users/:userId', (request, response) => {
 			resolve(
 				response.jsonOK(null, getMessage('account.signup.users.delete'))
 			)
-		} catch (err) {
-			console.error(err)
+		} catch (error) {
 			reject(
+				error,
 				response.jsonBadRequest(
-					err,
+					null,
 					getMessage('response.json_bad_request')
 				)
 			)
@@ -95,10 +90,11 @@ router.get('/users', (request, response) => {
 		try {
 			const users = await Account.findAll()
 			resolve(response.jsonOK(users, getMessage('response.json_ok')))
-		} catch (err) {
+		} catch (error) {
 			reject(
+				error,
 				response.jsonBadRequest(
-					err,
+					null,
 					getMessage('response.json_bad_request')
 				)
 			)
