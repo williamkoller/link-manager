@@ -6,7 +6,8 @@ const { Link } = require('../models')
 
 router.get('/', async (request, response) => {
     try {
-        const links = await Link.findAll()
+        const accountId = 1
+        const links = await Link.findAll({ where: { accountId }})
 
         return response.jsonOK(links)
     } catch (error) {
@@ -17,7 +18,7 @@ router.get('/', async (request, response) => {
 
 router.get('/:id', async (request, response) => {
     try {
-        const accountId = 2
+        const accountId = 1
         const { id } = request.params
         const link = await Link.findOne({ where: { id, accountId } })
         if (!link) return response.jsonNotFound()
@@ -29,7 +30,7 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     try {
-        const accountId = 2
+        const accountId = 1
         const { label, url, isSocial } = request.body
 
         const image = 'https://google.com/image.jpg'
@@ -45,7 +46,7 @@ router.post('/', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
     try {
-        const accountId = 2
+        const accountId = 1
         const { id } = request.params
         const { body } = request
         const fields = ['label', 'url', 'isSocial']
