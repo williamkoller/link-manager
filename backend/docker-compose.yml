@@ -4,11 +4,18 @@ services:
     db:
         image: mysql:5.7
         restart: always
+        env_file: 
+            - .env
         environment:
             MYSQL_ROOT_USER: ${DB_USER}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_DATABASE: ${DATABASE}
         ports:
-            - '3306:3306'
+            - ${DB_PORT}:${DB_PORT}
         volumes:
             - ./db:/var/lib/mysql
+        networks: 
+            - mysql-compose    
+networks: 
+    mysql-compose: 
+        driver: bridge
