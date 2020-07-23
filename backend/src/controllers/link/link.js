@@ -1,13 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const { getMessage } = require('../helpers/validator')
-const { Link } = require('../models')
-
+const { getMessage } = require('../../helpers/validator')
+const { Link } = require('../../models')
 
 router.get('/', async (request, response) => {
     try {
-        const accountId = 1
-        const links = await Link.findAll({ where: { accountId }})
+        const { accountId } = request
+        const links = await Link.findAll({ where: { accountId } })
 
         return response.jsonOK(links)
     } catch (error) {
@@ -18,7 +17,7 @@ router.get('/', async (request, response) => {
 
 router.get('/:id', async (request, response) => {
     try {
-        const accountId = 1
+        const { accountId } = request
         const { id } = request.params
         const link = await Link.findOne({ where: { id, accountId } })
         if (!link) return response.jsonNotFound()
@@ -30,8 +29,8 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     try {
-        const accountId = 1
-        const { label, url, isSocial } = request.body
+        const { accountId, body } = request
+        const { label, url, isSocial } = body
 
         const image = 'https://google.com/image.jpg'
 
@@ -46,9 +45,8 @@ router.post('/', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
     try {
-        const accountId = 1
+        const { accountId, body } = request
         const { id } = request.params
-        const { body } = request
         const fields = ['label', 'url', 'isSocial']
 
         const link = await Link.findOne({ where: { id, accountId } })
@@ -71,7 +69,7 @@ router.put('/:id', async (request, response) => {
 
 router.delete('/:id', async (request, response) => {
     try {
-        const { id } = request.params
+        const { id } = request
         const link = await Link.findOne({ where: { id } })
         if (!link) return response.jsonNotFound()
         await Link.destroy({ where: { id } })
