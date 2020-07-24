@@ -17,9 +17,9 @@ server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
 server.use(userController)
+server.use(signInController)
 server.use('/auth', signUpController)
 server.use(checkJwt)
-server.use(signInController)
 server.use('/link', linkController)
 
 db.sequelize.sync().then(() => {
