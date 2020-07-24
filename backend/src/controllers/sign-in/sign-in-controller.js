@@ -11,7 +11,6 @@ router.post('/sign-in', accountSignIn, async (request, response) => {
 		const { email, password, } = request.body
 		const account = await Account.findOne({ where: { email } })
 
-
 		const macth = account ? bcrypt.compareSync(password, account.password) : null
 
 		if (!macth) return reject(response.jsonBadRequest(null, getMessage('account.signin.invalid')))

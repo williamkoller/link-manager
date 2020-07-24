@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { accountSignUp } = require('../../validators/account')
 const bcrypt = require('bcrypt')
-const { getMessage } = require('../../helpers/messages')
 const salt = 10
+const { accountSignUp } = require('../../validators/account')
+const { getMessage } = require('../../helpers/messages')
 const { Account } = require('../../models')
 const { generateJwt, generateRefreshJwt } = require('../../helpers/jwt')
 

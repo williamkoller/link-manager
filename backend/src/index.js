@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './.env' })
 const express = require('express')
+const server = express()
 const db = require('./models')
 const morgan = require('morgan')
 const responseDefault = require('./middleware/response')
@@ -9,7 +10,6 @@ const signInController = require('./controllers/sign-in/sign-in-controller')
 const signUpController = require('./controllers/sign-up/sign-up-controller')
 const userController = require('./controllers/users/user-controller')
 
-const server = express()
 server.use(morgan('dev'))
 
 server.use(responseDefault)
