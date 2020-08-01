@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const salt = 10
-const { accountSignUp } = require('../../validators/account')
-const { getMessage } = require('../../helpers/messages')
-const { Account } = require('../../models')
-const { generateJwt, generateRefreshJwt } = require('../../helpers/jwt')
+const { accountSignUp } = require('../../../validators/account')
+const { getMessage } = require('../../../helpers/messages')
+const { Account } = require('../../../models')
+const { generateJwt, generateRefreshJwt } = require('../../../helpers/jwt')
 
 router.post('/sign-up', accountSignUp, async (request, response) => {
   try {
