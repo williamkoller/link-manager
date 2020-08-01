@@ -9,24 +9,24 @@ const options = { expiresIn: '30 minutes' }
 const refreshOptions = { expiresIn: '30 days' }
 
 const generateJwt = (paylod) => {
-	return jwt.sign(paylod, tokenPrivateKey, options)
+  return jwt.sign(paylod, tokenPrivateKey, options)
 }
 
 const generateRefreshJwt = (paylod) => {
-	return jwt.sign(paylod, refreshTokenPrivateKey, refreshOptions)
+  return jwt.sign(paylod, refreshTokenPrivateKey, refreshOptions)
 }
 
 const verifyJwt = (token) => {
-	return jwt.verify(token, tokenPrivateKey)
+  return jwt.verify(token, tokenPrivateKey)
 }
 
 const verifyRefreshJwt = (token) => {
-	return jwt.verify(token, refreshTokenPrivateKey)
+  return jwt.verify(token, refreshTokenPrivateKey)
 }
 
 module.exports = {
-	generateJwt,
-	verifyJwt,
-	generateRefreshJwt,
-	verifyRefreshJwt,
+  generateJwt,
+  verifyJwt,
+  generateRefreshJwt,
+  verifyRefreshJwt
 }
