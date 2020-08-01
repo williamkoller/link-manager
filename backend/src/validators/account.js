@@ -28,14 +28,14 @@ const accountSignIn = (request, response, next) => {
   next()
 }
 const accountSignUp = (request, response, next) => {
-  const { email, password, password_confirmation } = request.body
+  const { email, password, passwordConfirmation } = request.body
   const schema = Joi.object({
     email: rules.email,
     password: rules.password,
-    password_confirmation: rules.password_confirmation
+    passwordConfirmation: rules.passwordConfirmation
   })
   const { error } = schema.validate(
-    { email, password, password_confirmation },
+    { email, password, passwordConfirmation },
     options
   )
   if (error) {

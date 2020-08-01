@@ -23,15 +23,12 @@ server.use(checkJwt)
 server.use('/link', linkController)
 
 db.sequelize.sync().then(() => {
-	if (process.env.PORT || 3001) {
-		server.listen(process.env.PORT, () => {
-			console.log(
-				`Listening on http://localhost:${
-				process.env.PORT
-				} - on date the ${new Date()}`
-			)
-		})
-	}
+  if (process.env.PORT | 3001) {
+    server.listen(process.env.PORT, () => {
+      console.log(`Listening on http://localhost:${process.env.PORT} - on date the ${new Date()}`
+      )
+    })
+  }
 })
 
 module.exports = server
