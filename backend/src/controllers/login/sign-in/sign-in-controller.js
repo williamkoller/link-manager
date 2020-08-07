@@ -1,5 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
+
 const router = express.Router()
 const { accountSignIn } = require('../../../validators/account')
 const { generateJwt, generateRefreshJwt } = require('../../../helpers/jwt')
@@ -16,7 +17,7 @@ router.post('/sign-in', accountSignIn, async (request, response) => {
     if (!macth) return (response.jsonBadRequest(null, getMessage('account.signin.invalid')))
 
     const token = generateJwt({ id: account.id })
-    const refreshToken = generateRefreshJwt({ id: account.id })
+    const refreshToken = generateRefreshJwt({ id: account.id, version: account.jwtVersion })
     return response.jsonOK(account, getMessage('account.signin.success'), { token, refreshToken })
   } catch (error) {
     throw new Error(error, response.jsonBadRequest(null, getMessage('response.json_bad_request')))

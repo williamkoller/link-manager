@@ -1,6 +1,8 @@
 const express = require('express')
+
 const router = express.Router()
 const bcrypt = require('bcrypt')
+
 const salt = 10
 const { accountSignUp } = require('../../../validators/account')
 const { getMessage } = require('../../../helpers/messages')
@@ -19,7 +21,7 @@ router.post('/sign-up', accountSignUp, async (request, response) => {
     const newAccount = await Account.create({ email, password: hash })
 
     const token = generateJwt({ id: newAccount.id })
-    const refreshToken = generateRefreshJwt({ id: newAccount.id })
+    const refreshToken = generateRefreshJwt({ id: newAccount.id, version: newAccount.jwtVersion })
     return response.jsonOK(newAccount, getMessage('account.signup.success'), { token, refreshToken })
   } catch (error) {
     throw new Error(error, response.jsonBadRequest(null, getMessage('response.json_bad_request')))
