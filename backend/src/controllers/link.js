@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { getMessage } = require('../../helpers/validator')
-const { Link } = require('../../models')
+const { getMessage } = require('../helpers/validator')
+const { Link } = require('../models')
 
 router.get('/', async (request, response) => {
   try {

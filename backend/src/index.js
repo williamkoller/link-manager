@@ -5,11 +5,8 @@ const db = require('./models')
 const morgan = require('morgan')
 const responseDefault = require('./middleware/response')
 const checkJwt = require('./middleware/jwt')
-const linkController = require('./controllers/links/link')
-const signInController = require('./controllers/login/sign-in/sign-in-controller')
-const signUpController = require('./controllers/login/sign-up/sign-up-controller')
-const userController = require('./controllers/users/user-controller')
-
+const linkController = require('./controllers/link')
+const authcontroller = require('./controllers/auth')
 server.use(morgan('dev'))
 
 server.use(responseDefault)
@@ -17,9 +14,7 @@ server.use(checkJwt)
 server.use(express.json())
 server.use(express.urlencoded({ extended: false }))
 
-server.use(userController)
-server.use('/auth', signInController)
-server.use('/auth', signUpController)
+server.use('/auth', authcontroller)
 server.use('/link', linkController)
 
 db.sequelize.sync().then(() => {
