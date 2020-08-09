@@ -1,21 +1,24 @@
 version: '3'
 
-services:
-    db:
-        image: mysql:5.7
-        restart: always
-        env_file: 
-            - .env
-        environment:
-            MYSQL_ROOT_USER: ${DB_USER}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_DATABASE: ${DATABASE}
-        ports:
-            - ${DB_PORT}:${DB_PORT}
-        volumes:
-            - ./db:/var/lib/mysql
-        networks: 
-            - mysql-compose    
+services: 
+  mysqlsrv:
+    image: mysql:5.7
+    environment: 
+      MYSQL_ROOT_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE}
+    ports:
+      - "3306:3306"
+    volumes: 
+      - ./:/var/liv/mysql
+    networks: 
+      - mysql-compose-network
+  adminer:
+    image: adminer
+    ports: 
+      - "8080:8080"
+    networks: 
+      - mysql-compose-network
 networks: 
-    mysql-compose: 
-        driver: bridge
+  mysql-compose-network:
+    driver: bridge
