@@ -3,9 +3,9 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import Home from './Screens/Home'
 import SignIn from './Screens/SignIn'
 import SignUp from './Screens/SignUp'
-import Links from './Screens/Manager/Links'
-import Create from './Screens/Manager/Create'
-import Edit from './Screens/Manager/Edit'
+import ManagerLinks from './Screens/Manager/Links'
+import ManagerCreate from './Screens/Manager/Create'
+import ManagerEdit from './Screens/Manager/Edit'
 const App = () => {
   return (
     <BrowserRouter>
@@ -37,13 +37,13 @@ const App = () => {
             <SignUp />
           </Route>
           <Route path='/manager/links/create'>
-            <Create />
+            <ManagerCreate />
           </Route>
           <Route path='/manager/links/edit'>
-            <Edit />
+            <ManagerEdit />
           </Route>
           <Route path='/manager/links'>
-            <Links />
+            <ManagerLinks />
           </Route>
           <Route path='/'>
             <Home />
