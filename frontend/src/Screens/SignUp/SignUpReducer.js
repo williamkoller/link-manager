@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
       const response = payload ? payload.data : null
 
       const account = response ? response.data : null
-      const metadata = payload ? response.metadata : null
+      const metadata = response ? response.metadata : null
 
       const token = metadata ? metadata.token : null
       const refreshToken = metadata ? metadata.refreshToken : null
