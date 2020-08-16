@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from './SignUpActions'
 
-const SignUp = () => {
+const SignUp = (props) => {
+  const { signUp } = props
   const submitHandler = (e) => {
     e.preventDefault()
     const formData = new window.FormData(e.target)
@@ -18,11 +19,16 @@ const SignUp = () => {
         <form onSubmit={submitHandler}>
           <div className='form-group'>
             <label htmlFor=''>E-mail</label>
-            <input type='text' className='form-control' name='email' />
+            <input type='text' className='form-control' name='email' required />
           </div>
           <div className='form-group'>
             <label htmlFor=''>Password</label>
-            <input type='password' className='form-control' name='password' />
+            <input
+              type='password'
+              className='form-control'
+              name='password'
+              required
+            />
           </div>
           <div className='form-group'>
             <label htmlFor=''>Password Confirmation</label>
@@ -30,6 +36,7 @@ const SignUp = () => {
               type='password'
               className='form-control'
               name='passwordConfirmation'
+              required
             />
           </div>
           <div>
