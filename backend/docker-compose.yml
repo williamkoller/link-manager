@@ -1,24 +1,24 @@
 version: '3'
 
-services: 
+services:
   mysqlsrv:
     image: mysql:5.7
-    environment: 
+    environment:
       MYSQL_ROOT_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DATABASE}
     ports:
-      - "3306:3306"
-    volumes: 
+      - '3306:3306'
+    volumes:
       - ./:/var/liv/mysql
-    networks: 
+    networks:
       - mysql-compose-network
   adminer:
     image: adminer
-    ports: 
-      - "8080:8080"
-    networks: 
+    ports:
+      - '8080:8080'
+    networks:
       - mysql-compose-network
-networks: 
+networks:
   mysql-compose-network:
     driver: bridge

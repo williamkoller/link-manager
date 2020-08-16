@@ -10,7 +10,7 @@ const linkController = require('./controllers/link')
 const authcontroller = require('./controllers/auth')
 server.use(morgan('dev'))
 
-server.use(cors)
+server.use(cors())
 server.use(responseDefault)
 server.use(checkJwt)
 server.use(express.json())
@@ -20,9 +20,12 @@ server.use('/auth', authcontroller)
 server.use('/link', linkController)
 
 db.sequelize.sync().then(() => {
-  if (process.env.PORT | 3001) {
+  if (process.env.PORT | 3005) {
     server.listen(process.env.PORT, () => {
-      console.log(`Listening on http://localhost:${process.env.PORT} - on date the ${new Date()}`
+      console.log(
+        `Listening on http://localhost:${
+          process.env.PORT
+        } - on date the ${new Date()}`
       )
     })
   }
