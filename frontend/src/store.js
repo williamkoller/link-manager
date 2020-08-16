@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import ReduxPromise from 'redux-promise'
 
-const reducers = combineReducers({})
+import signInReducer from './Screens/SignIn/SignInReducer'
+
+const reducers = combineReducers({
+  signIn: signInReducer
+})
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise))
 
