@@ -6,15 +6,13 @@ import { signUp } from './SignUpActions'
 const SignUp = () => {
   const submitHandler = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
+    const formData = new window.FormData(e.target)
     const data = Object.fromEntries(formData)
-
-    console.log('*** SignUp.submitHandler.data', data)
 
     signUp(data)
   }
   return (
-    <div className='container h-100 pt-5'>
+    <div key={signUp} className='container h-100 pt-5'>
       <h1>Sign Up</h1>
       <div className='d-flex flex-column h-100'>
         <form onSubmit={submitHandler}>
@@ -28,7 +26,11 @@ const SignUp = () => {
           </div>
           <div className='form-group'>
             <label htmlFor=''>Password Confirmation</label>
-            <input type='password' className='form-control' name='passwordConfirmation' />
+            <input
+              type='password'
+              className='form-control'
+              name='passwordConfirmation'
+            />
           </div>
           <div>
             <button className='btn btn-primary btn-round'>Submit</button>
