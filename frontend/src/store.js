@@ -1,12 +1,10 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import ReduxPromise from 'redux-promise'
 
-import signInReducer from './Screens/SignIn/SignInReducer'
-import signUpReducer from './Screens/SignUp/SignUpReducer'
+import accountReducer from './Reducers/AccountReducer'
 
 const reducers = combineReducers({
-  signIn: signInReducer,
-  signUp: signUpReducer
+  account: accountReducer
 })
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise))
